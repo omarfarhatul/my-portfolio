@@ -1,8 +1,7 @@
-import './App.css'
-
 import { motion, AnimatePresence } from 'motion/react';
 import { 
-  GitFork,
+  Github, 
+  Linkedin, 
   Mail, 
   Download, 
   ExternalLink, 
@@ -96,6 +95,32 @@ const SectionHeading = ({ children, subtitle }: { children: React.ReactNode, sub
 );
 
 export default function App() {
+  const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'sent'>('idle');
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setFormStatus('sending');
+    
+    // In a real environment, you'd use a service like Formspree
+    // await fetch("https://formspree.io/f/your_id", { method: 'POST', body: JSON.stringify(formData) });
+    
+    setTimeout(() => {
+      setFormStatus('sent');
+      setFormData({ name: '', email: '', subject: '', message: '' });
+      setTimeout(() => setFormStatus('idle'), 5000);
+    }, 1500);
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
   return (
     <div className="min-h-screen selection:bg-brand-primary/30 selection:text-brand-primary">
       <Navbar />
@@ -135,12 +160,16 @@ export default function App() {
             </p>
             
             <div className="flex flex-wrap gap-5 mb-12">
-              <button className="btn-primary">
+              <a href="#projects" className="btn-primary">
                 Explore Projects <ExternalLink size={20} />
-              </button>
-              <button className="btn-secondary">
+              </a>
+              <a 
+                href="/my-resume.pdf" 
+                download="Omar_Farhatul_Resume.pdf"
+                className="btn-secondary"
+              >
                 View Resume <Download size={20} />
-              </button>
+              </a>
             </div>
             
             <div className="flex items-center gap-6 border-t border-white/5 pt-10">
@@ -483,7 +512,7 @@ export default function App() {
                       <ExternalLink size={20} />
                     </button>
                     <button className="p-3 bg-white/10 hover:bg-brand-secondary rounded-full backdrop-blur-md transition-all text-white">
-                      <GitFork size={20} />
+                      <Github size={20} />
                     </button>
                   </div>
                 </div>
@@ -548,7 +577,7 @@ export default function App() {
               <div className="pt-8">
                 <p className="font-bold mb-4">Connect With Me</p>
                 <div className="flex gap-4">
-                  {[GitFork, ExternalLink, Mail].map((Icon, idx) => (
+                  {[Github, Linkedin, Mail].map((Icon, idx) => (
                     <button key={idx} className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-brand-primary transition-all text-gray-400 hover:text-white">
                       <Icon size={20} />
                     </button>
@@ -561,29 +590,78 @@ export default function App() {
                initial={{ opacity: 0, x: 30 }}
                whileInView={{ opacity: 1, x: 0 }}
                viewport={{ once: true }}
+               onSubmit={handleSubmit}
                className="glass-card space-y-6"
             >
-              <div className="grid grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="text-xs font-bold uppercase tracking-wider text-gray-500 px-1">Your Name</label>
-                  <input placeholder="John Doe" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:border-brand-primary focus:bg-white/10 outline-hidden transition-all text-white" />
+                  <input 
+                    required
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder="John Doe" 
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:border-brand-primary focus:bg-white/10 outline-hidden transition-all text-white" 
+                  />
                 </div>
                 <div className="space-y-2">
                   <label className="text-xs font-bold uppercase tracking-wider text-gray-500 px-1">Your Email</label>
-                  <input placeholder="john@example.com" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:border-brand-primary focus:bg-white/10 outline-hidden transition-all text-white" />
+                  <input 
+                    required
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="john@example.com" 
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:border-brand-primary focus:bg-white/10 outline-hidden transition-all text-white" 
+                  />
                 </div>
               </div>
               <div className="space-y-2">
                 <label className="text-xs font-bold uppercase tracking-wider text-gray-500 px-1">Subject</label>
-                <input placeholder="Project Inquiry" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:border-brand-primary focus:bg-white/10 outline-hidden transition-all text-white" />
+                <input 
+                  required
+                  name="subject"
+                  value={formData.subject}
+                  onChange={handleChange}
+                  placeholder="Project Inquiry" 
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:border-brand-primary focus:bg-white/10 outline-hidden transition-all text-white" 
+                />
               </div>
               <div className="space-y-2">
                 <label className="text-xs font-bold uppercase tracking-wider text-gray-500 px-1">Message</label>
-                <textarea rows={4} placeholder="Tell me about your project..." className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:border-brand-primary focus:bg-white/10 outline-hidden transition-all text-white resize-none" />
+                <textarea 
+                  required
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  rows={4} 
+                  placeholder="Tell me about your project..." 
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:border-brand-primary focus:bg-white/10 outline-hidden transition-all text-white resize-none" 
+                />
               </div>
-              <button className="btn-primary w-full">
-                Send Message
-              </button>
+              
+              <AnimatePresence mode="wait">
+                {formStatus === 'sent' ? (
+                  <motion.div 
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    className="bg-green-500/20 border border-green-500/50 text-green-500 p-4 rounded-xl text-center font-bold"
+                  >
+                    Message Sent Successfully!
+                  </motion.div>
+                ) : (
+                  <button 
+                    disabled={formStatus === 'sending'}
+                    type="submit" 
+                    className="btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {formStatus === 'sending' ? 'Sending...' : 'Send Message'}
+                  </button>
+                )}
+              </AnimatePresence>
             </motion.form>
           </div>
         </div>
@@ -593,8 +671,8 @@ export default function App() {
       <footer className="py-12 border-t border-white/5">
         <div className="max-w-7xl mx-auto px-6 md:px-12 flex flex-col items-center">
           <div className="flex gap-8 mb-8">
-            <GitFork size={24} className="text-gray-500 hover:text-white cursor-pointer transition-colors" />
-            <ExternalLink size={24} className="text-gray-500 hover:text-white cursor-pointer transition-colors" />
+            <Github size={24} className="text-gray-500 hover:text-white cursor-pointer transition-colors" />
+            <Linkedin size={24} className="text-gray-500 hover:text-white cursor-pointer transition-colors" />
             <Mail size={24} className="text-gray-500 hover:text-white cursor-pointer transition-colors" />
           </div>
           <p className="text-gray-500 text-sm">
@@ -605,4 +683,3 @@ export default function App() {
     </div>
   );
 }
-
