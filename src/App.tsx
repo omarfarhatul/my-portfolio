@@ -164,7 +164,7 @@ export default function App() {
                 Explore Projects <ExternalLink size={20} />
               </a>
               <a 
-                href="/my-resume.pdf" 
+                href="/my_cv.pdf" 
                 download="Omar_Farhatul_Resume.pdf"
                 className="btn-secondary"
               >
@@ -469,28 +469,28 @@ export default function App() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
-                title: 'Warm Paws',
-                desc: 'Expertly crafted winter care services designed to provide comfort and protection for pets.',
-                image: 'https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?q=80&w=2071&auto=format&fit=crop',
-                tags: ['React', 'Tailwind', 'Motion'],
-                live: '#',
-                source: '#'
+                title: 'Fitness',
+                desc: 'Fitness improves strength, boosts energy, supports mental health and maintains a balanced healthy lifestyle.',
+                image: '/Fitness.png',
+                tags: ['React', 'Tailwind', 'HTML'],
+                live: 'https://omarfarhatul.github.io/Assignment-2/',
+                source: 'https://github.com/omarfarhatul/Assignment-2'
               },
               {
-                title: 'Local Food Lovers',
-                desc: 'A community platform for food enthusiasts to share reviews and discover top-rated local dishes.',
-                image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=2070&auto=format&fit=crop',
-                tags: ['MERN', 'Auth', 'Stripe'],
-                live: '#',
-                source: '#'
+                title: 'Peddy',
+                desc: 'Adopting a pet gives an animal a second chance and brings endless joy and happiness to your life.',
+                image: '/pet.png',
+                tags: ['JS', 'React', 'Tailwind'],
+                live: 'https://poetic-brioche-086f7e.netlify.app/',
+                source: 'https://github.com/omarfarhatul/Assignment-6'
               },
               {
-                title: 'Fitness Club',
-                desc: 'A comprehensive fitness platform featuring workout videos, health tips, and membership options.',
-                image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop',
-                tags: ['React', 'Next.js', 'Firebase'],
-                live: '#',
-                source: '#'
+                title: 'Rinterio',
+                desc: 'The barn house blends rustic charm and modern style, with wood, metal accents and bright natural light.',
+                image: '/house.png',
+                tags: ['React', 'HTML', 'JS'],
+                live: 'https://omarfarhatul.github.io/Assignment-3/',
+                source: 'https://github.com/omarfarhatul/Assignment-3'
               }
             ].map((project, index) => (
               <motion.div 
@@ -508,12 +508,22 @@ export default function App() {
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-dark-bg/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4">
-                    <button className="p-3 bg-white/10 hover:bg-brand-primary rounded-full backdrop-blur-md transition-all text-white">
+                    <a 
+                      href={project.live} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="p-3 bg-white/10 hover:bg-brand-primary rounded-full backdrop-blur-md transition-all text-white"
+                    >
                       <ExternalLink size={20} />
-                    </button>
-                    <button className="p-3 bg-white/10 hover:bg-brand-secondary rounded-full backdrop-blur-md transition-all text-white">
+                    </a>
+                    <a 
+                      href={project.source} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="p-3 bg-white/10 hover:bg-brand-secondary rounded-full backdrop-blur-md transition-all text-white"
+                    >
                       <Github size={20} />
-                    </button>
+                    </a>
                   </div>
                 </div>
                 <div className="p-6 flex-1 flex flex-col">
@@ -527,12 +537,22 @@ export default function App() {
                     ))}
                   </div>
                   <div className="grid grid-cols-2 gap-4">
-                    <button className="gradient-bg text-white py-2.5 rounded-lg text-sm font-semibold flex items-center justify-center gap-2 hover:opacity-90 transition-opacity">
+                    <a 
+                      href={project.live}
+                      target="_blank"
+                      rel="noopener noreferrer" 
+                      className="bg-linear-to-r from-brand-primary to-brand-secondary text-white py-2.5 rounded-lg text-sm font-semibold flex items-center justify-center gap-2 hover:opacity-90 transition-opacity"
+                    >
                       Live Demo
-                    </button>
-                    <button className="bg-white/5 border border-white/10 text-white py-2.5 rounded-lg text-sm font-semibold flex items-center justify-center gap-2 hover:bg-white/10 transition-all">
+                    </a>
+                    <a 
+                      href={project.source}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-white/5 border border-white/10 text-white py-2.5 rounded-lg text-sm font-semibold flex items-center justify-center gap-2 hover:bg-white/10 transition-all"
+                    >
                       Source
-                    </button>
+                    </a>
                   </div>
                 </div>
               </motion.div>
