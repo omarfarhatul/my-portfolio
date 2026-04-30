@@ -467,7 +467,14 @@ export default function App() {
           </SectionHeading>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
+            {[{
+              title: 'GadgetHub',
+                desc: 'GadgetHub offers latest gadgets with reliable quality, affordable prices and excellent customer service.',
+                image: '/GadgetHub.png',
+                tags: ['React', 'TypeScript', 'Firebase Firestore'],
+                live: 'https://rad-daffodil-9fc82e.netlify.app/',
+                source: 'https://github.com/omarfarhatul/gadgethub_plus'
+              },
               {
                 title: 'Fitness',
                 desc: 'Fitness improves strength, boosts energy, supports mental health and maintains a balanced healthy lifestyle.',
