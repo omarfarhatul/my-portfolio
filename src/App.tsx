@@ -499,6 +499,7 @@ export default function App() {
                 live: 'https://omarfarhatul.github.io/Assignment-3/',
                 source: 'https://github.com/omarfarhatul/Assignment-3'
               }
+
             ].map((project, index) => (
               <motion.div 
                 key={index}
