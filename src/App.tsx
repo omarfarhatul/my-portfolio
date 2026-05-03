@@ -224,7 +224,7 @@ export default function App() {
                 animate={{ opacity: 1, x: 0 }}
                 whileHover={{ scale: 1.05, x: -10, y: -5 }}
                 transition={{ delay: 1 }}
-                className="hidden lg:flex absolute -left-4 top-1/4 glass-card py-3 px-5 items-center gap-3 z-30 shadow-2xl cursor-default"
+                className="hidden lg:flex absolute -left-18 top-1/4 glass-card py-3 px-5 items-center gap-3 z-30 shadow-2xl cursor-default"
               >
                 <div className="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center text-green-500">
                   <Code2 size={20} />
@@ -545,12 +545,12 @@ export default function App() {
                 source: 'https://github.com/omarfarhatul/gadgethub_plus'
               },
               {
-              title: 'GadgetHub',
-                desc: 'GadgetHub offers latest gadgets with reliable quality, affordable prices and excellent customer service.',
-                image: '/GadgetHub.png',
-                tags: ['React', 'TypeScript', 'Firebase Firestore'],
-                live: 'https://rad-daffodil-9fc82e.netlify.app/',
-                source: 'https://github.com/omarfarhatul/gadgethub_plus'
+              title: 'Educational& E-commerce Learning Platform',
+                desc: 'An educational and e-commerce platform empowers users to study, access courses and develop skills.',
+                image: '/Learning_Platform.png',
+                tags: ['MongoDB', 'TypeScript', 'Firebase'],
+                live: 'https://flourishing-strudel-869e0c.netlify.app/',
+                source: 'https://github.com/omarfarhatul/learnpro'
               },
               {
                 title: 'Fitness',
