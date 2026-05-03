@@ -553,6 +553,14 @@ export default function App() {
                 source: 'https://github.com/omarfarhatul/learnpro'
               },
               {
+              title: 'MunchExpress Food Delivery',
+                desc: 'MunchExpress is a popular online platform that delivers delicious meals and groceries directly to your doorstep.',
+                image: '/food_delivery.png',
+                tags: ['TypeScript', 'Firebase', 'Node.js'],
+                live: 'https://chic-liger-a35d48.netlify.app/',
+                source: 'https://github.com/omarfarhatul/munchexpress'
+              },
+              {
                 title: 'Fitness',
                 desc: 'Fitness improves strength, boosts energy, supports mental health and maintains a balanced healthy lifestyle.',
                 image: '/Fitness.png',
