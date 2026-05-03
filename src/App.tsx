@@ -13,9 +13,10 @@ import {
   BookOpen,
   Layout,
   Terminal,
-  Cpu
+  Cpu,
+  Facebook
 } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, ReactNode } from 'react';
 
 // --- Components ---
 
@@ -36,7 +37,6 @@ const Navbar = () => {
     { name: 'Skills', id: 'skills' },
     { name: 'Education', id: 'education' },
     { name: 'Projects', id: 'projects' },
-    { name: 'Articles', id: 'articles' },
     { name: 'Contact', id: 'contact' },
   ];
 
@@ -47,21 +47,34 @@ const Navbar = () => {
           <div className="w-10 h-10 rounded-xl bg-linear-to-br from-brand-primary to-brand-secondary flex items-center justify-center font-bold text-white shadow-lg shadow-brand-primary/20 transition-transform group-hover:rotate-12">O</div>
           <span className="font-heading font-bold text-xl tracking-tight hidden sm:block">Omar Farhatul</span>
         </div>
-        <div className="hidden lg:flex items-center gap-1 p-1 bg-white/5 rounded-xl border border-white/5">
+        <div className="hidden lg:flex items-center gap-1 p-1.5 bg-white/5 rounded-2xl border border-white/5 backdrop-blur-xl">
           {navItems.map((item) => (
-            <a 
+            <motion.a 
               key={item.id} 
               href={`#${item.id}`} 
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               className={`nav-link ${activeSection === item.id ? 'active' : ''}`}
               onClick={() => setActiveSection(item.id)}
             >
-              {item.name}
-            </a>
+              <span className="relative z-10">{item.name}</span>
+              {activeSection === item.id && (
+                <motion.div 
+                  layoutId="activeNavTab"
+                  className="absolute inset-0 bg-white/10 rounded-xl shadow-sm"
+                  transition={{ type: "spring", bounce: 0.25, duration: 0.5 }}
+                />
+              )}
+            </motion.a>
           ))}
         </div>
-        <button className="hidden sm:flex gradient-bg text-white px-5 py-2.5 rounded-xl font-semibold text-sm hover:opacity-90 transition-opacity">
+        <motion.button 
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="hidden sm:flex gradient-bg text-white px-5 py-2.5 rounded-xl font-semibold text-sm hover:opacity-90 transition-opacity shadow-lg shadow-brand-primary/20"
+        >
           Hire Me
-        </button>
+        </motion.button>
       </div>
     </nav>
   );
@@ -70,27 +83,31 @@ const Navbar = () => {
 const SectionHeading = ({ children, subtitle }: { children: React.ReactNode, subtitle?: string }) => (
   <div className="text-center mb-16">
     <motion.h2 
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="text-4xl md:text-5xl font-heading font-bold mb-4 tracking-tighter"
+      className="text-4xl md:text-6xl font-heading font-extrabold mb-6 tracking-tighter"
     >
-      <span className="relative inline-block">
-        {children}
-        <span className="absolute -bottom-2 left-0 w-full h-1 bg-linear-to-r from-brand-primary/60 to-transparent rounded-full"></span>
-      </span>
+      {children}
     </motion.h2>
     {subtitle && (
       <motion.p 
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
+        initial={{ opacity: 0, y: 10 }}
+        whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ delay: 0.2 }}
-        className="text-gray-400 max-w-2xl mx-auto mt-6 text-lg"
+        className="text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed font-medium"
       >
         {subtitle}
       </motion.p>
     )}
+    <motion.div 
+      initial={{ width: 0, opacity: 0 }}
+      whileInView={{ width: "80px", opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ delay: 0.4, duration: 0.8 }}
+      className="h-1.5 gradient-bg mx-auto rounded-full mt-6 shadow-[0_4px_12px_rgba(99,102,241,0.3)]"
+    />
   </div>
 );
 
@@ -160,16 +177,23 @@ export default function App() {
             </p>
             
             <div className="flex flex-wrap gap-5 mb-12">
-              <a href="#projects" className="btn-primary">
+              <motion.a 
+                href="#projects" 
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.98 }}
+                className="btn-primary"
+              >
                 Explore Projects <ExternalLink size={20} />
-              </a>
-              <a 
+              </motion.a>
+              <motion.a 
                 href="/my_cv.pdf" 
                 download="Omar_Farhatul_Resume.pdf"
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.98 }}
                 className="btn-secondary"
               >
                 View Resume <Download size={20} />
-              </a>
+              </motion.a>
             </div>
             
             <div className="flex items-center gap-6 border-t border-white/5 pt-10">
@@ -191,46 +215,72 @@ export default function App() {
             initial={{ opacity: 0, scale: 0.9, rotate: 2 }}
             animate={{ opacity: 1, scale: 1, rotate: 0 }}
             transition={{ duration: 1, ease: "easeOut" }}
-            className="relative flex justify-center lg:justify-end"
+            className="relative flex flex-col items-center lg:items-end gap-8"
           >
-            {/* Stat Cards */}
-            <motion.div 
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 1 }}
-              className="absolute -left-4 top-1/4 glass-card py-3 px-5 flex items-center gap-3 z-30 shadow-2xl"
-            >
-              <div className="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center text-green-500">
-                <Code2 size={20} />
-              </div>
-              <div>
-                <p className="text-[10px] text-gray-400 font-black uppercase tracking-widest">Experience</p>
-                <p className="text-sm font-bold text-white">1+ Year</p>
-              </div>
-            </motion.div>
+            <div className="relative">
+              {/* Stat Cards - Floating on Desktop only (lg screens) */}
+              <motion.div 
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                whileHover={{ scale: 1.05, x: -10, y: -5 }}
+                transition={{ delay: 1 }}
+                className="hidden lg:flex absolute -left-4 top-1/4 glass-card py-3 px-5 items-center gap-3 z-30 shadow-2xl cursor-default"
+              >
+                <div className="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center text-green-500">
+                  <Code2 size={20} />
+                </div>
+                <div>
+                  <p className="text-[10px] text-gray-400 font-black uppercase tracking-widest leading-none mb-1">Experience</p>
+                  <p className="text-sm font-bold text-white">1+ Year</p>
+                </div>
+              </motion.div>
 
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.2 }}
-              className="absolute -right-4 bottom-1/4 glass-card py-3 px-5 flex items-center gap-3 z-30 shadow-2xl"
-            >
-              <div className="w-10 h-10 rounded-full bg-brand-primary/20 flex items-center justify-center text-brand-primary">
-                <Layout size={20} />
-              </div>
-              <div>
-                <p className="text-[10px] text-gray-400 font-black uppercase tracking-widest">Completed</p>
-                <p className="text-sm font-bold text-white">10+ Projects</p>
-              </div>
-            </motion.div>
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                whileHover={{ scale: 1.05, x: 10, y: 5 }}
+                transition={{ delay: 1.2 }}
+                className="hidden lg:flex absolute -right-4 bottom-1/4 glass-card py-3 px-5 items-center gap-3 z-30 shadow-2xl cursor-default"
+              >
+                <div className="w-10 h-10 rounded-full bg-brand-primary/20 flex items-center justify-center text-brand-primary">
+                  <Layout size={20} />
+                </div>
+                <div>
+                  <p className="text-[10px] text-gray-400 font-black uppercase tracking-widest leading-none mb-1">Completed</p>
+                  <p className="text-sm font-bold text-white">10+ Projects</p>
+                </div>
+              </motion.div>
 
-            <div className="relative w-full max-w-[400px] aspect-[4/5] rounded-[2.5rem] overflow-hidden border border-white/10 shadow-2xl group ring-1 ring-white/10 ring-offset-4 ring-offset-dark-bg">
-              <img 
-                src="Hossain_img.png" 
-                alt="Profile" 
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-linear-to-t from-dark-bg via-transparent to-transparent opacity-60"></div>
+              <div className="relative w-full max-w-[400px] aspect-[4/5] rounded-[2.5rem] overflow-hidden border border-white/10 shadow-2xl group ring-1 ring-white/10 ring-offset-4 ring-offset-dark-bg">
+                <img 
+                  src="Hossain_img.png" 
+                  alt="Profile" 
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-linear-to-t from-dark-bg via-transparent to-transparent opacity-60"></div>
+              </div>
+            </div>
+
+            {/* Mobile Stats Row - visible below profile on screens smaller than lg */}
+            <div className="lg:hidden grid grid-cols-2 gap-4 w-full max-w-[400px]">
+               <div className="glass-card py-4 px-3 flex flex-col items-center text-center gap-2 border-white/10">
+                 <div className="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center text-green-500">
+                   <Code2 size={20} />
+                 </div>
+                 <div>
+                   <p className="text-[9px] text-gray-500 font-black uppercase tracking-widest leading-none mb-1">Experience</p>
+                   <p className="text-base font-bold text-white">1+ Year</p>
+                 </div>
+               </div>
+               <div className="glass-card py-4 px-3 flex flex-col items-center text-center gap-2 border-white/10">
+                 <div className="w-10 h-10 rounded-full bg-brand-primary/20 flex items-center justify-center text-brand-primary">
+                   <Layout size={20} />
+                 </div>
+                 <div>
+                   <p className="text-[9px] text-gray-500 font-black uppercase tracking-widest leading-none mb-1">Completed</p>
+                   <p className="text-base font-bold text-white">10+ Projects</p>
+                 </div>
+               </div>
             </div>
           </motion.div>
         </div>
@@ -270,35 +320,43 @@ export default function App() {
               </div>
             </motion.div>
             
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-            >
-              <p className="text-gray-300 leading-relaxed mb-6 text-lg">
-                I am a dedicated Full Stack Developer with a strong focus on building efficient, user-centric web applications. My expertise lies in the MERN stack, where I combine technical precision with a clean coding philosophy to deliver high-quality digital solutions.
-              </p>
-              <p className="text-gray-400 leading-relaxed mb-10">
-                With a background deeply rooted in problem-solving and modern web architecture, I thrive on turning complex requirements into seamless user experiences. I am constantly exploring new technologies to stay at the forefront of the ever-evolving tech landscape.
-              </p>
-              
-              <div className="mb-10">
-                <h4 className="flex items-center gap-2 font-bold mb-4 text-white">
-                  <Terminal size={18} className="text-brand-primary" /> Core Competencies
-                </h4>
-                <div className="flex flex-wrap gap-2">
-                  {['Tailwind CSS', 'JavaScript', 'MongoDB', 'Express.js', 'React.js', 'Node.js'].map(skill => (
-                    <span key={skill} className="bg-white/5 border border-white/10 px-4 py-2 rounded-lg text-sm hover:border-brand-primary/50 transition-colors">
-                      {skill}
-                    </span>
-                  ))}
+              <motion.div 
+                initial={{ opacity: 0, x: 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+              >
+                <p className="text-gray-300 leading-relaxed mb-6 text-lg">
+                  I am a dedicated Full Stack Developer with a strong focus on building efficient, user-centric web applications. My expertise lies in the MERN stack, where I combine technical precision with a clean coding philosophy to deliver high-quality digital solutions.
+                </p>
+                <p className="text-gray-400 leading-relaxed mb-10">
+                  With a background deeply rooted in problem-solving and modern web architecture, I thrive on turning complex requirements into seamless user experiences. I am constantly exploring new technologies to stay at the forefront of the ever-evolving tech landscape.
+                </p>
+                
+                <div className="mb-10">
+                  <h4 className="flex items-center gap-2 font-bold mb-4 text-white">
+                    <Terminal size={18} className="text-brand-primary" /> Core Competencies
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {['Tailwind CSS', 'JavaScript', 'MongoDB', 'Express.js', 'React.js', 'Node.js'].map(skill => (
+                      <motion.span 
+                        key={skill} 
+                        whileHover={{ y: -5, scale: 1.05, borderColor: 'var(--color-brand-primary)' }}
+                        className="bg-white/5 border border-white/10 px-4 py-2 rounded-lg text-sm transition-colors cursor-default"
+                      >
+                        {skill}
+                      </motion.span>
+                    ))}
+                  </div>
                 </div>
-              </div>
-              
-              <button className="gradient-bg text-white px-8 py-3 rounded-lg font-semibold flex items-center gap-2 hover:opacity-90 transition-opacity">
-                Let's Talk <Send size={18} />
-              </button>
-            </motion.div>
+                
+                <motion.button 
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="gradient-bg text-white px-8 py-3 rounded-lg font-semibold flex items-center gap-2 hover:opacity-90 transition-opacity"
+                >
+                  Let's Talk <Send size={18} />
+                </motion.button>
+              </motion.div>
           </div>
         </div>
       </section>
@@ -371,9 +429,13 @@ export default function App() {
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {['Problem Solving', 'Communication', 'Team Collaboration', 'Time Management', 'Critical Thinking'].map(skill => (
-                    <span key={skill} className="bg-white/5 border border-white/10 px-3 py-1.5 rounded-lg text-xs">
+                    <motion.span 
+                      key={skill} 
+                      whileHover={{ y: -3, backgroundColor: 'rgba(99, 102, 241, 0.1)', borderColor: 'rgba(99, 102, 241, 0.3)' }}
+                      className="bg-white/5 border border-white/10 px-3 py-1.5 rounded-lg text-xs transition-colors cursor-default"
+                    >
                       {skill}
-                    </span>
+                    </motion.span>
                   ))}
                 </div>
               </motion.div>
@@ -393,9 +455,13 @@ export default function App() {
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {['VS Code', 'Git', 'GitHub', 'Figma', 'Netlify'].map(tool => (
-                    <span key={tool} className="bg-white/5 border border-white/10 px-3 py-1.5 rounded-lg text-xs">
+                    <motion.span 
+                      key={tool} 
+                      whileHover={{ y: -3, backgroundColor: 'rgba(168, 85, 247, 0.1)', borderColor: 'rgba(168, 85, 247, 0.3)' }}
+                      className="bg-white/5 border border-white/10 px-3 py-1.5 rounded-lg text-xs transition-colors cursor-default"
+                    >
                       {tool}
-                    </span>
+                    </motion.span>
                   ))}
                 </div>
               </motion.div>
@@ -442,7 +508,10 @@ export default function App() {
                 <div className="absolute left-[24px] md:left-1/2 -translate-x-1/2 w-4 h-4 rounded-full border-4 border-dark-bg bg-brand-primary z-10"></div>
                 
                 <div className={`w-full md:w-1/2 ${edu.position === 'left' ? 'md:text-right' : 'md:text-left'}`}>
-                   <div className="glass-card inline-block group hover:bg-white/10">
+                   <motion.div 
+                      whileHover={{ scale: 1.02, y: -5 }}
+                      className="glass-card inline-block group hover:bg-white/10"
+                   >
                       <div className={`flex items-center gap-3 mb-2 font-bold text-sm text-brand-primary ${edu.position === 'left' ? 'md:flex-row-reverse' : ''}`}>
                          <BookOpen size={16} />
                          <span>{edu.year}</span>
@@ -450,7 +519,7 @@ export default function App() {
                       <h4 className="text-xl font-bold mb-1">{edu.title}</h4>
                       <p className="text-gray-400 font-medium mb-3">{edu.org}</p>
                       <p className="text-sm text-gray-500 max-w-md">{edu.desc}</p>
-                   </div>
+                   </motion.div>
                 </div>
                 <div className="hidden md:block w-1/2"></div>
               </motion.div>
@@ -468,6 +537,14 @@ export default function App() {
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[{
+              title: 'GadgetHub',
+                desc: 'GadgetHub offers latest gadgets with reliable quality, affordable prices and excellent customer service.',
+                image: '/GadgetHub.png',
+                tags: ['React', 'TypeScript', 'Firebase Firestore'],
+                live: 'https://rad-daffodil-9fc82e.netlify.app/',
+                source: 'https://github.com/omarfarhatul/gadgethub_plus'
+              },
+              {
               title: 'GadgetHub',
                 desc: 'GadgetHub offers latest gadgets with reliable quality, affordable prices and excellent customer service.',
                 image: '/GadgetHub.png',
@@ -505,9 +582,10 @@ export default function App() {
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
+                whileHover={{ y: -12 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="glass-card p-0 overflow-hidden group flex flex-col"
+                className="glass-card p-0 overflow-hidden group flex flex-col hover:shadow-brand-primary/10"
               >
                 <div className="relative overflow-hidden aspect-video">
                   <img 
@@ -539,28 +617,36 @@ export default function App() {
                   <p className="text-gray-400 text-sm mb-6 flex-1">{project.desc}</p>
                   <div className="flex flex-wrap gap-2 mb-6">
                     {project.tags.map(tag => (
-                      <span key={tag} className="text-[10px] font-bold uppercase tracking-wider bg-white/5 border border-white/10 px-2 py-1 rounded">
+                      <motion.span 
+                        key={tag} 
+                        whileHover={{ y: -2, scale: 1.1, backgroundColor: 'rgba(59, 130, 246, 0.2)' }}
+                        className="text-[10px] font-bold uppercase tracking-wider bg-white/5 border border-white/10 px-2 py-1 rounded transition-colors cursor-default"
+                      >
                         {tag}
-                      </span>
+                      </motion.span>
                     ))}
                   </div>
                   <div className="grid grid-cols-2 gap-4">
-                    <a 
+                    <motion.a 
                       href={project.live}
                       target="_blank"
                       rel="noopener noreferrer" 
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
                       className="bg-linear-to-r from-brand-primary to-brand-secondary text-white py-2.5 rounded-lg text-sm font-semibold flex items-center justify-center gap-2 hover:opacity-90 transition-opacity"
                     >
                       Live Demo
-                    </a>
-                    <a 
+                    </motion.a>
+                    <motion.a 
                       href={project.source}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="bg-white/5 border border-white/10 text-white py-2.5 rounded-lg text-sm font-semibold flex items-center justify-center gap-2 hover:bg-white/10 transition-all"
+                      whileHover={{ scale: 1.05, backgroundColor: 'rgba(255, 255, 255, 0.1)' }}
+                      whileTap={{ scale: 0.95 }}
+                      className="bg-white/5 border border-white/10 text-white py-2.5 rounded-lg text-sm font-semibold flex items-center justify-center gap-2 transition-all"
                     >
                       Source
-                    </a>
+                    </motion.a>
                   </div>
                 </div>
               </motion.div>
@@ -604,11 +690,25 @@ export default function App() {
               
               <div className="pt-8">
                 <p className="font-bold mb-4">Connect With Me</p>
-                <div className="flex gap-4">
-                  {[Github, Linkedin, Mail].map((Icon, idx) => (
-                    <button key={idx} className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-brand-primary transition-all text-gray-400 hover:text-white">
+                <div className="flex flex-wrap gap-4">
+                  {[
+                    { Icon: Github, url: 'https://github.com/omarfarhatul', label: 'GitHub' },
+                    { Icon: Linkedin, url: 'https://linkedin.com/in/omarfarhatul', label: 'LinkedIn' },
+                    { Icon: Facebook, url: 'https://www.facebook.com/ofh.hossain', label: 'Facebook' },
+                    { Icon: Mail, url: 'mailto:omarfarhatulhossain@gmail.com', label: 'Email' }
+                  ].map(({ Icon, url, label }, idx) => (
+                    <motion.a 
+                      key={idx} 
+                      href={url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title={label}
+                      whileHover={{ scale: 1.1, y: -5, backgroundColor: 'var(--color-brand-primary)', color: '#fff' }}
+                      whileTap={{ scale: 0.9 }}
+                      className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center transition-all text-gray-400 shadow-lg shadow-black/20"
+                    >
                       <Icon size={20} />
-                    </button>
+                    </motion.a>
                   ))}
                 </div>
               </div>
@@ -698,10 +798,25 @@ export default function App() {
       {/* Footer */}
       <footer className="py-12 border-t border-white/5">
         <div className="max-w-7xl mx-auto px-6 md:px-12 flex flex-col items-center">
-          <div className="flex gap-8 mb-8">
-            <Github size={24} className="text-gray-500 hover:text-white cursor-pointer transition-colors" />
-            <Linkedin size={24} className="text-gray-500 hover:text-white cursor-pointer transition-colors" />
-            <Mail size={24} className="text-gray-500 hover:text-white cursor-pointer transition-colors" />
+          <div className="flex flex-wrap justify-center gap-8 mb-8">
+            {[
+              { Icon: Github, url: 'https://github.com/omarfarhatul', label: 'GitHub' },
+              { Icon: Linkedin, url: 'https://linkedin.com/in/omarfarhatul', label: 'LinkedIn' },
+              { Icon: Facebook, url: 'https://www.facebook.com/ofh.hossain', label: 'Facebook' },
+              { Icon: Mail, url: 'mailto:omarfarhatulhossain@gmail.com', label: 'Email' }
+            ].map(({ Icon, url, label }, idx) => (
+              <motion.a 
+                key={idx}
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.2, color: 'var(--color-brand-primary)' }}
+                className="text-gray-500 transition-colors"
+                title={label}
+              >
+                <Icon size={24} />
+              </motion.a>
+            ))}
           </div>
           <p className="text-gray-500 text-sm">
             © {new Date().getFullYear()} Omar Farhatul. All rights reserved.
