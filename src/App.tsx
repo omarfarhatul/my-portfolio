@@ -709,7 +709,7 @@ export default function App() {
                 <div className="flex flex-wrap gap-4">
                   {[
                     { Icon: Github, url: 'https://github.com/omarfarhatul', label: 'GitHub' },
-                    { Icon: Linkedin, url: 'www.linkedin.com/in/omar-farhatul-701445419', label: 'LinkedIn' },
+                    { Icon: Linkedin, url: 'https://www.linkedin.com/in/omar-farhatul-701445419/', label: 'LinkedIn' },
                     { Icon: Facebook, url: 'https://www.facebook.com/ofh.hossain', label: 'Facebook' },
                     { Icon: Mail, url: 'mailto:omarfarhatulhossain@gmail.com', label: 'Email' }
                   ].map(({ Icon, url, label }, idx) => (
