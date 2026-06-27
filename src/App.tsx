@@ -537,6 +537,14 @@ export default function App() {
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[{
+              title: 'ভদ্রলোক • Bhadralok | Mens Premium Wear',
+                desc: 'Bhadralok offers premium mens fashion with elegant, stylish, comfortable, and high-quality clothing collections.',
+                image: '/Bhadralok.png',
+                tags: ['React', 'Node.js', 'TypeScript'],
+                live: 'https://bhadralok-men-s-wear.vercel.app/',
+                source: 'https://github.com/omarfarhatul/bhadralok-men-s-wear'
+              },
+              {
               title: 'GadgetHub',
                 desc: 'GadgetHub offers latest gadgets with reliable quality, affordable prices and excellent customer service.',
                 image: '/GadgetHub.png',
