@@ -817,7 +817,7 @@ export default function App() {
           <div className="flex flex-wrap justify-center gap-8 mb-8">
             {[
               { Icon: Github, url: 'https://github.com/omarfarhatul', label: 'GitHub' },
-              { Icon: Linkedin, url: 'https://linkedin.com/in/omarfarhatul', label: 'LinkedIn' },
+              { Icon: Linkedin, url: 'www.linkedin.com/in/omar-farhatul-701445419', label: 'LinkedIn' },
               { Icon: Facebook, url: 'https://www.facebook.com/ofh.hossain', label: 'Facebook' },
               { Icon: Mail, url: 'mailto:omarfarhatulhossain@gmail.com', label: 'Email' }
             ].map(({ Icon, url, label }, idx) => (
