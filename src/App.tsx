@@ -709,7 +709,7 @@ export default function App() {
                 <div className="flex flex-wrap gap-4">
                   {[
                     { Icon: Github, url: 'https://github.com/omarfarhatul', label: 'GitHub' },
-                    { Icon: Linkedin, url: 'https://linkedin.com/in/omarfarhatul', label: 'LinkedIn' },
+                    { Icon: Linkedin, url: 'www.linkedin.com/in/omar-farhatul-701445419', label: 'LinkedIn' },
                     { Icon: Facebook, url: 'https://www.facebook.com/ofh.hossain', label: 'Facebook' },
                     { Icon: Mail, url: 'mailto:omarfarhatulhossain@gmail.com', label: 'Email' }
                   ].map(({ Icon, url, label }, idx) => (
@@ -833,6 +833,7 @@ export default function App() {
                 <Icon size={24} />
               </motion.a>
             ))}
+            
           </div>
           <p className="text-gray-500 text-sm">
             © {new Date().getFullYear()} Omar Farhatul. All rights reserved.
